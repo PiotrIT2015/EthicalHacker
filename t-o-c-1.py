@@ -1,49 +1,62 @@
-#!/usr/bin/python
-
+#!/usr/bin/env python3
 import paramiko
 import time
-import re
+import ipaddress
 
-IP_ADDRESS_RE = re.compile(r"^\b(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\b$")
+def ip_address_valid(ip_addr: str) -> bool:
+    try:
+        ipaddress.IPv4Address(ip_addr)
+        return True
+    except ipaddress.AddressValueError:
+        return False
 
-def ip_address_valid(ip_addr):
-  if not IP_ADDRESS_RE.match(ip_addr):
-    return False
-  ip_addr_octets = ip_addr.split(".")
-  for octet in ip_addr_octets:
-	  if (0 <= int(octet) <= 255):
-		  return True
+def run_commands(
+    ip: str,
+    username: str,
+    password: str,
+    commands: list[str],
+    delay: float,
+    frequency: int
+) -> None:
+    session = None
+    try:
+        session = paramiko.SSHClient()
+        session.load_system_host_keys()
+        session.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-def toc(ip,typed_username,typed_password,line_cmd,typed_sleeping_time,typed_frequency):
-	try:
-		session=paramiko.SSHClient()
-		session.load_system_host_keys()
-		session.set_missing_host_key_policy(paramiko.RejectPolicy())
-		session.connect(ip,username=typed_username,password=typed_password)
-		connection=session.invoke_shell()
-		connection.send("terminal length 0\n")
-		time.sleep(1)
-		connection.send(line_cmd+'\n')
-		time.sleep(typed_sleeping_time)
-	except paramiko.AuthenticationException:
-        print("* Invalid username or password. \n* Please check the username/password file or the device configuration!")
-        print("* Closing program...\n")
+        print(f"Connecting to {ip} ...")
+        session.connect(ip, username=username, password=password)
+
+        chan = session.invoke_shell()
+        chan.send("terminal length 0\n")
+        time.sleep(1)
+
+        for _ in range(frequency):
+            for cmd in commands:
+                chan.send(cmd + "\n")
+                time.sleep(delay)
+    except paramiko.AuthenticationException:
+        print("✖  Błędny login lub hasło – sprawdź dane!")
+    except Exception as exc:
+        print(f"✖  Błąd: {exc}")
     finally:
-		session.close()
-		
+        if session:
+            session.close()
+
 def main():
-  ip_addr = raw_input("Type IP adress from network:") 
-  username = raw_input("Type username of network device:") 
-  password = raw_input("Type IP adress of network device:") 
-  command_all = raw_input("Type commands which would you like to try:") 
-  delay_all = raw_input("Type delay for each command:")  
-  frequency = raw_input("Type frequency of commands on network device:") 
-  input_cmd = []
-  input_cmd.append(command_all.split(','))  
-  
-  while not ip_address_valid(ip_addr):
-	  print("Your error address input",ip_addr)
-	  ip_addr = raw_input("Type IP adress from network again:")	
-	  toc(input_cmd,command_all,delay_all,frequency,ip_addr2,username,password)
-  else:
-	  toc(input_cmd,command_all,delay_all,frequency,ip_addr,username,password)
+    while True:
+        ip_addr = input("Adres IP urządzenia sieciowego: ").strip()
+        if ip_address_valid(ip_addr):
+            break
+        print("✖  Niepoprawny adres IP – spróbuj ponownie.")
+
+    username = input("Nazwa użytkownika: ").strip()
+    password = input("Hasło: ").strip()
+    commands = [cmd.strip() for cmd in input("Polecenia (oddzielone przecinkami): ").split(",")]
+    delay = float(input("Opóźnienie między poleceniami (s): ").strip())
+    frequency = int(input("Ile razy powtórzyć zestaw poleceń: ").strip())
+
+    run_commands(ip_addr, username, password, commands, delay, frequency)
+
+if __name__ == "__main__":
+    main()
