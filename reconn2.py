@@ -1,29 +1,32 @@
-#!/usr/bin/python
-
-import socket
-import select
-import sys
-import matplotlib.pyplot as plt
+#!/usr/bin/env python3
+import socket, select, sys, matplotlib.pyplot as plt
 
 if len(sys.argv) != 4:
-	print "Usage - ./banner_grab.py [Target-IP] [First Port] [Last Port]"
-	print "Example - ./banner_grab.py 10.0.0.5 1 100"
-	print "Example will grab banners for TCP ports 1 through 100 on 10.0.0.5"
-	sys.exit()
+    print("Usage: banner_grab.py <IP> <first_port> <last_port>")
+    sys.exit(1)
 
-ip = sys.argv[1]
-start = int(sys.argv[2])
-end = int(sys.argv[3])
+ip, start, end = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
+open_ports, banner_sizes = [], []
 
-for port in range(start,end):
-	try:
-		bangrab = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		bangrab.connect((ip, port))
-		ready = select.select([bangrab],[],[],1)
-		if ready[0]:
-			print("TCP Port " + str(port) + " - " + bangrab.recv(4096))
-			plt.plot(port,bangrab)
-			plt.show()
-		bangrab.close()
-	except:
-		pass
+for port in range(start, end + 1):
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.settimeout(1)
+            if s.connect_ex((ip, port)) == 0:          # 0 = połączenie OK
+                r, _, _ = select.select([s], [], [], 1)
+                if r:
+                    banner = s.recv(4096)
+                    txt = banner.decode(errors='replace').strip()
+                    print(f"TCP {port:>5} – {txt}")
+                    open_ports.append(port)
+                    banner_sizes.append(len(banner))
+    except Exception as e:
+        print(f"[{port}] {e}")
+
+if open_ports:
+    plt.plot(open_ports, banner_sizes, marker="o")
+    plt.xlabel("Port");  plt.ylabel("Banner length (bytes)")
+    plt.title(f"Banners for {ip}");  plt.grid();  plt.show()
+else:
+    print("Brak otwartych portów lub bannerów w zakresie.")
+
