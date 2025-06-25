@@ -1,6 +1,12 @@
-#OSINT[polecenia i opisy]
+# OSINT[polecenia i opisy]
+
 - spiderfoot -l 127.0.0.1:5001
+
+---
+
 - `sfp_dnsresolve` to **moduł w frameworku SpiderFoot**, który służy do rozwiązywania nazw DNS (czyli tłumaczenia nazw domenowych na adresy IP) w trakcie pasywnego i aktywnego rozpoznania.
+
+---
 
 ### Kontekst:
 
@@ -28,7 +34,7 @@ SpiderFoot to narzędzie typu OSINT (Open Source Intelligence), używane do auto
 
 ---
 
-`sfp_email` to **moduł SpiderFoot** odpowiedzialny za **wyszukiwanie adresów e-mail** związanych z celem (np. domeną, firmą, osobą). Należy do grupy **modułów pasywnych** — czyli takich, które **nie nawiązują bezpośredniego kontaktu z celem**, tylko szukają danych w dostępnych źródłach OSINT.
+- `sfp_email` to **moduł SpiderFoot** odpowiedzialny za **wyszukiwanie adresów e-mail** związanych z celem (np. domeną, firmą, osobą). Należy do grupy **modułów pasywnych** — czyli takich, które **nie nawiązują bezpośredniego kontaktu z celem**, tylko szukają danych w dostępnych źródłach OSINT.
 
 ---
 
@@ -73,7 +79,7 @@ To może posłużyć do dalszej analizy OSINT lub do wykrywania punktów kontakt
 
 ---
 
-`sfp_crossref` to **moduł korelacyjny (cross-referencing) SpiderFoot**, który pełni rolę **wewnętrznego „łącznika”** między różnymi danymi zebranymi przez inne moduły. Nie pobiera danych z zewnętrznych źródeł, ale **analizuje i porównuje już zebrane informacje**, aby znaleźć dodatkowe powiązania i zależności.
+- `sfp_crossref` to **moduł korelacyjny (cross-referencing) SpiderFoot**, który pełni rolę **wewnętrznego „łącznika”** między różnymi danymi zebranymi przez inne moduły. Nie pobiera danych z zewnętrznych źródeł, ale **analizuje i porównuje już zebrane informacje**, aby znaleźć dodatkowe powiązania i zależności.
 
 ---
 
@@ -321,7 +327,7 @@ Jeśli analizujesz domenę `examplecorp.com`, a w WHOIS pojawia się `Example Co
 
 ---
 
-`sfp_crt` to **moduł SpiderFoot**, który pobiera dane z serwisu **[crt.sh](https://crt.sh)** — publicznego rejestru certyfikatów SSL/TLS — w celu odnalezienia **domen i subdomen** związanych z analizowanym celem.
+- `sfp_crt` to **moduł SpiderFoot**, który pobiera dane z serwisu **[crt.sh](https://crt.sh)** — publicznego rejestru certyfikatów SSL/TLS — w celu odnalezienia **domen i subdomen** związanych z analizowanym celem.
 
 ---
 
@@ -769,7 +775,7 @@ Dla IP `193.0.6.135` moduł może znaleźć:
 
 ---
 
-`sfp_strangeheaders` to **moduł SpiderFoot**, który analizuje **nagłówki HTTP** zwrócone przez serwery WWW celu (np. `example.com`) i wykrywa **nietypowe lub potencjalnie podejrzane nagłówki**, które mogą wskazywać na błędną konfigurację, wycieki informacji lub niestandardowe technologie.
+- `sfp_strangeheaders` to **moduł SpiderFoot**, który analizuje **nagłówki HTTP** zwrócone przez serwery WWW celu (np. `example.com`) i wykrywa **nietypowe lub potencjalnie podejrzane nagłówki**, które mogą wskazywać na błędną konfigurację, wycieki informacji lub niestandardowe technologie.
 
 ---
 
@@ -987,7 +993,7 @@ Dla e-maila `jan.kowalski@example.com` może znaleźć użytkownika Keybase:
 
 ---
 
-`sfp_pageinfo` to moduł SpiderFoot, który analizuje zawartość i metadane stron internetowych (HTML) danej domeny lub URL, aby wyciągnąć przydatne informacje o stronie.
+- `sfp_pageinfo` to moduł SpiderFoot, który analizuje zawartość i metadane stron internetowych (HTML) danej domeny lub URL, aby wyciągnąć przydatne informacje o stronie.
 
 ---
 
@@ -1062,7 +1068,7 @@ Dla `https://example.com` moduł może wyciągnąć:
 
 ---
 
-`sfp_webframework` to moduł SpiderFoot, który służy do **identyfikacji technologii i frameworków webowych** używanych przez daną stronę internetową lub serwer [WWW](http://WWW).
+- `sfp_webframework` to moduł SpiderFoot, który służy do **identyfikacji technologii i frameworków webowych** używanych przez daną stronę internetową lub serwer [WWW](http://WWW).
 
 ---
 
@@ -1136,6 +1142,8 @@ Dla strony `example.com` moduł może wykryć:
 * Ułatwia zrozumienie struktury i architektury aplikacji webowej.
 
 ---
+
+# Pozostałe
 
 - recon-ng
 - recon-web [uruchamia stronę na porcie 5000]
