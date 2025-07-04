@@ -7,8 +7,8 @@ Legal Note:
 Version with Nmap is usually passive and legal, but you should still have permission from the owner of the host being scanned or 
 the appropriate network permissions.
 
-- with 'port-scanner.py' you could receive response from hosts through ports which you will type. I tried to, in the time on university,
-implemented it in Java[additionaly I'd like to present data on chart, but I couldn't fix it, because there was't, i.e.ChatGPT]
+- with 'port-scanner.py' you could receive response from hosts through ports which you will type. I tried to, in the time of university,
+implemented it in Java[additionaly I'd like to present data on chart, but I couldn't fix it, because there wasn't, i.e.ChatGPT]
 
 ## other tools
 
