@@ -1145,15 +1145,15 @@ Dla strony `example.com` moduł może wykryć:
 
 # Pozostałe
 
-- recon-ng
-- recon-web [uruchamia stronę na porcie 5000]
-- workspace create
-- workspaces load
-- back
-- recon-ng-marketplace
-- marketplace install
-- modules load
-- options set source websitename
-- run
-- info
-- dasboard
+- `recon-ng`
+- `recon-web` [uruchamia stronę na porcie 5000]
+- `workspace create`
+- `workspaces load`
+- `back`
+- `recon-ng-marketplace`
+- `marketplace install`
+- `modules load`
+- `options set source websitename`
+- `run`
+- `info`
+- `dasboard`
