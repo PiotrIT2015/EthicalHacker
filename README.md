@@ -10,3 +10,5 @@ the appropriate network permissions.
 - with 'port-scanner.py' you could receive response from hosts through ports which you will type. I tried, in the time of university, to
 implement it in Java[additionaly I'd like to present data on chart, but I couldn't fix it, because there wasn't, i.e.ChatGPT]
 
+- the explanation why 'get-cookies.py' is important you can find in 'Google dorks.md'
+
