@@ -12,3 +12,5 @@ implement it in Java[additionaly I'd like to present data on chart, but I couldn
 
 - the explanation why 'get-cookies.py' is important you can find in 'Google dorks.md'
 
+- 'penetration-tests.py' is a diagnostic tool
+
