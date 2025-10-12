@@ -14,3 +14,5 @@ implement it in Java[additionaly I'd like to present data on chart, but I couldn
 
 - 'penetration-tests-1.py' is a diagnostic tool with 'scapy'
 
+- 'nmap_to_msf.py' - the code snippet is using 'metasploit'
+
